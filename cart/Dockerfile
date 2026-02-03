@@ -4,3 +4,6 @@ COPY *.js .
 COPY package.json .
 # This will install all the dependencies
 RUN npm install
+
+
+# Here our second stage stats
