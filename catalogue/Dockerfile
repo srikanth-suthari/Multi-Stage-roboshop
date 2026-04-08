@@ -10,7 +10,6 @@ COPY *.js .
 RUN npm install
 
 # Stage - 2
-
 FROM node:20.19.5-alpine3.21
 
 WORKDIR /opt/server
