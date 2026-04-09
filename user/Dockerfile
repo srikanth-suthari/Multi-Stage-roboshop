@@ -21,7 +21,7 @@ FROM node:20.19.5-alpine3.21
 WORKDIR /opt/server
 
 #Adding a user/group with flag -S and adding that user to its primary group with -G flag in a single layer or instruction
-RUN addgroup -S roboshop && addgroup -S roboshop -G roboshop \
+RUN addgroup -S roboshop && adduser -S roboshop -G roboshop \
 
     #changing the permissions to the /opt/server recurcively from root to roboshop
     chown -R roboshop:roboshop /opt/server
