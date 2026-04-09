@@ -36,5 +36,6 @@ ENV CART_HOST="cart" \
     AMQP_USER="roboshop" \
     AMQP_PASS="roboshop123"
 
+# Runnign the payment application as roboshop user
 USER roboshop
 CMD ["uwsgi", "--ini", "payment.ini"]
