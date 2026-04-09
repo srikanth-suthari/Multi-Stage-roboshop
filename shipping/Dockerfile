@@ -1,27 +1,32 @@
-#Here we are using maven to build our application as our application is written in java
-FROM maven:3.9.11
+#Stage 1
+FROM maven:3.9.11 AS builder
 
-#This creates a directory for the application
 WORKDIR /opt/server
 
-#This will copy the pom.xml file to the workdir which has all the dependencies and libraries
 COPY pom.xml .
 
-#Here we are copying the src directory into the container as /src directory with all the files and folders within it
+# this is known as copying the local src folder into /opt/server as the same src
 COPY src ./src
 
-#Exposing on the port 8080
+RUN mvn clean package && \
+    mv target/shipping-1.0.jar shipping.jar
+
+#Stage 2
+FROM eclipse-temurin:17-jre-alpine
 EXPOSE 8080
 
-#here we install all the dependencies from maven repository and build it into a .jar file as an executable using this command
-RUN mvn clean package
+# Adding user and group to this image or container and the primary group with -G
+RUN addgroup -S roboshop && adduser -S roboshop -G roboshop
 
-#Here we are changing the name of our artifact from shipping-1.0.jar to shipping.jar and moving it from target directory to working directory
-RUN mv target/shipping-1.0.jar shipping.jar
-
-# Setting env for shipping service
+# Another workdir
+# Here the actual application is being copied from the above builder
+WORKDIR /opt/server
 ENV CART_ENDPOINT="cart:8080" \
     DB_HOST="mysql"
 
-#At final we are running our application or .jar file using java runtime in the conatiner
-CMD ["java", "-jar", "shipping.jar"]
+# Copying the builder to this stage
+COPY --from=builder --chown=roboshop:roboshop /opt/server/shipping.jar .
+
+#Using the roboshop user
+USER roboshop
+CMD ["sh", "-c", "sleep 30 && java -jar shipping.jar"]
