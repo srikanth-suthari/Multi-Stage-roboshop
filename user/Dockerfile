@@ -38,7 +38,7 @@ ENV MONGO="true" \
 
 #Copying the build file from the stage 1 to here
 #It comes with the dependencies and application code
-COPy --from=builder --chown=roboshop:roboshop /opt/server /opt/server
+COPy --from=build --chown=roboshop:roboshop /opt/server /opt/server
 #Changing the permissions for /opt/server from root user to roboshop user
 
 #Running the application with roboshop user
