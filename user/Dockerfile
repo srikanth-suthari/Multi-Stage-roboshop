@@ -13,10 +13,9 @@ COPY *.js .
 #Installing the depencies of the application
 RUN npm install
 
-# Stage - 2
-# here node:20.19.5-alpine3.21 is an operating system with node runtime
+#Stage - 2 & here node:20.19.5-alpine3.21 is an operating system with node runtime
 FROM node:20.19.5-alpine3.21
-
+    
 #Setting a work directory
 WORKDIR /opt/server
 
