@@ -5,8 +5,8 @@ WORKDIR /opt/server
 
 COPY main.go .
 
-RUN go mod init dispatch \
-    go get \
+RUN go mod init dispatch && \
+    go get && \
     go build dispatch
 
 # Stage 2
