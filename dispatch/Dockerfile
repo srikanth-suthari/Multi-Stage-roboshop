@@ -1,5 +1,5 @@
 # Stage 1
-FROM golang AS build
+FROM golang:1.24-alpine AS builder
 
 WORKDIR /opt/server
 
@@ -10,7 +10,7 @@ RUN go mod init dispatch && \
     go build dispatch
 
 # Stage 2
-FROM alpine
+FROM golang:1.24-alpine
 
 WORKDIR /opt/server
 
@@ -23,7 +23,7 @@ ENV AMQP_HOST="rabbitmq" \
     AMQP_USER="roboshop" \
     AMQP_PASS="roboshop123"
 
-COPY --from=build --chown=roboshop:roboshop /opt/server /opt/server
+COPY --from=builder --chown=roboshop:roboshop /opt/server /opt/server
 
 USER roboshop
 
