@@ -21,4 +21,4 @@ ENV REDIS_HOST="redis" \
 COPY --from=build --chown=roboshop:roboshop /opt/server /opt/server
 USER roboshop
 CMD ["server.js"]
-ENTRYPOINT ["node"]
+ENTRYPOINT ["node"]s
