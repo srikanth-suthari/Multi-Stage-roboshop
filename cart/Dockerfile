@@ -1,4 +1,3 @@
-#Stage 1
 FROM node:20.19.5-alpine3.21 AS build
 WORKDIR /opt/server
 COPY package.json .
@@ -6,7 +5,7 @@ COPY *.js .
 # this may add extra cache memory
 RUN npm install
 
-#Stage 2
+
 FROM node:20.19.5-alpine3.21
 # Create a group and user
 WORKDIR /opt/server
