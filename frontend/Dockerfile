@@ -1,4 +1,4 @@
-FROM nginx:1.29.4-alpine
+FROM nginx:1.27-alpine
 
 RUN rm /etc/nginx/nginx.conf /etc/nginx/conf.d/default.conf
 
@@ -20,7 +20,6 @@ RUN touch /var/run/nginx.pid && \
         chown -R nginx:nginx /var/run/nginx.pid /run/nginx.pid
 COPY nginx.conf /etc/nginx/nginx.conf
 COPY static /usr/share/nginx/html/
-
-# Here we are using the user as nginx (only for frontend)
+COPY static /usr/share/nginx/html/
 USER nginx
 CMD ["nginx", "-g", "daemon off;"]
